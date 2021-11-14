@@ -1,5 +1,5 @@
 import wollok.game.*
-import Direcciones.*
+import direcciones.*
 
 // en la implementación real, conviene tener un personaje por nivel
 // los personajes probablemente tengan un comportamiendo más complejo que solamente
@@ -10,35 +10,20 @@ object personajeSimple {
 	const property image = "player.png"
 	var property direccion
 
-	method x() = position.x()
-
-	method y() = position.y()
-
 	method cambiarPosicion(pos) {
-		if (self.puedeMoverseA(pos)) position = pos else if (self.direccion() == "arriba") position = game.at(self.x(), 0) else if (direccion == "abajo") position = game.at(self.x(), game.height() - 1) else if (direccion == "derecha") position = game.at(0, self.y()) else if (direccion == "izquierda") position = game.at(game.width() - 1, self.y())
+		if (self.puedeMoverseA(pos)) self.position(pos) else self.moverAExtremoOpuesto()
 	}
 
-	method moverDerecha() {
-		direccion = "derecha"
-		self.cambiarPosicion(self.position().right(1))
-	}
-
-	method moverIzquierda() {
-		direccion = "izquierda"
-		self.cambiarPosicion(self.position().left(1))
-	}
-
-	method moverArriba() {
-		self.cambiarPosicion(self.position().up(1))
-		direccion = "arriba"
-	}
-
-	method moverAbajo() {
-		direccion = "abajo"
-		self.cambiarPosicion(self.position().down(1))
+	method moverA(direc) {
+		direccion = direc
+		self.cambiarPosicion(self.direccion().siguiente(self.position()))
 	}
 
 	method puedeMoverseA(pos) = pos.x().between(0, game.height() - 1) and pos.y().between(0, game.width() - 1)
+
+	method moverAExtremoOpuesto() {
+		self.position(direccion.extremoOpuesto(self.position()))
+	}
 
 }
 
