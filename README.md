@@ -15,7 +15,7 @@ ustedes; con las teclas como prefieran, déjenlas como están, cambien de tecla,
 
 ## Algunas cosas que obligatoriamente deben implementar
 - El juego debe tener un personaje principal que pueda moverse en ambos niveles y tener al menos energía y salud. Las teclas del movimiento deberán ser las teclas  (↓) (↑) (→) (←)
-- En el juevo siempre deberán estar visibles los indicadores de energía y salud del personaje principal. Puede tener otros indicadores como por ejemplo: cantidad de granadas 
+- En el juego siempre deberán estar visibles los indicadores de energía y salud del personaje principal. Puede tener otros indicadores como por ejemplo: cantidad de granadas 
 - Efecto tipo pac-man, esto quiere decir que si por ejemplo, el personaje principal esta posicionado sobre cualquier columna en la fila superior del tablero  y  se presiona la 
 flecha arriba (↑), entonces el personaje deberá aparecer en la parte inferior del tablero. Esta funcionalidad debe ser independiente del tamaño del tablero (no vale hardcodear 
 los valores de alto y ancho)

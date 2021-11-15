@@ -5,14 +5,24 @@ import personajes.*
 class Elemento {
 
 	var property position
-	var direccion = arriba
+	var property direccion = arriba
 
 	method sePuedePisar()
 
 	method moverA(direc) {
 	}
 
-	method hayCeldaLibreAl(direc) = game.getObjectsIn(direc.siguiente(position)).all({ elem => elem.sePuedePisar( ) })
+	method cambiarPosicion(pos) {
+		if (self.puedeMoverseAl(direccion)) self.position(pos)
+	}
+
+	method puedeMoverseAl(direc) = game.getObjectsIn(direc.siguiente(position)).all({ elem => elem.sePuedePisar() }) and self.sePuedeMover()
+
+	method sePuedeMover()
+
+	method esLlave() = false
+
+	method esCofre() = false
 
 }
 
@@ -22,30 +32,24 @@ class Cofre inherits Elemento {
 
 	override method sePuedePisar() = false
 
-	method cambiarPosicion(pos) {
-		if (self.puedeMoverseA(pos)) self.position(pos) else if (self.esBorde()) self.moverAExtremoOpuesto()
-	}
+	override method sePuedeMover() = true
 
 	override method moverA(direc) {
 		direccion = direc
 		self.cambiarPosicion(direccion.siguiente(self.position()))
 	}
 
-	method puedeMoverseA(pos) = pos.x().between(0, game.height() - 1) and pos.y().between(0, game.width() - 1) and self.hayCeldaLibreAl(direccion)
-
-	method moverAExtremoOpuesto() {
-		self.position(direccion.extremoOpuesto(self.position()))
-	}
-
-	method esBorde() = position.x() == 0 or position.x() == 14 or position.y() == 0 or position.y() == 14
+	override method esCofre() = true
 
 }
 
 class Deposito inherits Elemento {
 
-	const property image = "deposito2.png"
+	const property image = "pisoDePiedras2.png"
 
 	override method sePuedePisar() = true
+
+	override method sePuedeMover() = false
 
 }
 
@@ -55,12 +59,68 @@ class Llave inherits Elemento {
 
 	override method sePuedePisar() = false
 
-	method serAgarrado() {
-		pirata.agarrarLlave(self)
+	override method sePuedeMover() = false
+
+	method serAgarrada() {
 		game.removeVisual(self)
 	}
 
-	method esLlave() = true
+	override method esLlave() = true
+
+}
+
+object paleta {
+
+	const property verde = "00FF00FF"
+
+}
+
+object salud {
+
+	const property position = game.at(1, 14)
+
+	method text() = "Salud: " + pirata.salud().printString()
+
+	method textColor() = paleta.verde()
+
+	method sePuedePisar() = true
+
+	method moverA(direc) {
+	}
+
+	method cambiarPosicion(pos) {
+	}
+
+	method puedeMoverseAl(direc) = game.getObjectsIn(direc.siguiente(position)).all({ elem => elem.sePuedePisar() }) and self.sePuedeMover()
+
+	method sePuedeMover() = false
+
+	method esLlave() = false
+
+	method esCofre() = false
+
+}
+
+object corazon {
+
+	const property position = game.at(0, 14)
+	var property image = "corazon.png"
+
+	method sePuedePisar() = true
+
+	method moverA(direc) {
+	}
+
+	method cambiarPosicion(pos) {
+	}
+
+	method puedeMoverseAl(direc) = game.getObjectsIn(direc.siguiente(position)).all({ elem => elem.sePuedePisar() }) and self.sePuedeMover()
+
+	method sePuedeMover() = false
+
+	method esLlave() = false
+
+	method esCofre() = false
 
 }
 

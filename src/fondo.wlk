@@ -1,11 +1,13 @@
 import wollok.game.*
+import elementos.*
 
-class Fondo {
+class Fondo inherits Elemento {
 
-	const property position = game.at(0, 0)
 	var property image
 
-	method moverA(direc) {}
+	override method sePuedePisar() = true
+
+	override method sePuedeMover() = false
 
 }
 
