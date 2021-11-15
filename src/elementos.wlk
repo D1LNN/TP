@@ -23,6 +23,8 @@ class Elemento {
 	method esLlave() = false
 
 	method esCofre() = false
+	
+	method esLingote() = false
 
 }
 
@@ -55,7 +57,7 @@ class Deposito inherits Elemento {
 
 class Llave inherits Elemento {
 
-	const property image = "llave2.png"
+	var property image = "llave2.png"
 
 	override method sePuedePisar() = false
 
@@ -123,4 +125,19 @@ object corazon {
 	method esCofre() = false
 
 }
+
+class Lingote inherits Llave {
+	override method image() = "oro.png"
+	override method esLingote() = true
+}
+
+
+
+
+
+
+
+
+
+
 

@@ -1,5 +1,6 @@
 import wollok.game.*
 import nivel1.*
+import nivel2.*
 
 program juego_aventura {
 	game.title("Oh qué aventura objetosa")

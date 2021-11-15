@@ -4,7 +4,7 @@ import personajes.*
 import elementos.*
 import nivel2.*
 import direcciones.*
-import textosVisibles.*
+//import textosVisibles.*
 
 object nivelBloques {
 
@@ -14,7 +14,7 @@ object nivelBloques {
 		game.addVisual(new Deposito(position = game.at((0 .. game.width() - 3).anyOne(), (0 .. game.height() - 2).anyOne())))
 			// textos informativos
 		game.addVisual(corazon)
-		game.addVisual(salud)
+		//game.addVisual(salud)
 			// Cofres
 		game.addVisual(new Cofre(position = game.at((0 .. game.width()).anyOne(), (0 .. game.height()).anyOne())))
 		game.addVisual(new Cofre(position = game.at((0 .. game.width()).anyOne(), (0 .. game.height()).anyOne())))
@@ -34,6 +34,7 @@ object nivelBloques {
 			// Especiales
 		keyboard.space().onPressDo{ pirata.agarrarLlaveAl(pirata.direccion())} // Agarrar llave
 		keyboard.t().onPressDo({ self.terminar()}) // Terminar
+		keyboard.p().onPressDo({ self.perder()}) // Perder
 			// Coliciones
 		game.whenCollideDo(pirata, { elemento => elemento.moverA(pirata.direccion())})
 	}
@@ -47,14 +48,20 @@ object nivelBloques {
 			// después de un ratito ...
 		game.schedule(2500, { game.clear()
 				// cambio de fondo
-			game.addVisual(new Fondo(position = game.at(0, 0), image = "finNivel1.png"))
+		game.addVisual(new Fondo(position = game.at(0, 0), image = "ganasteNivel1.png"))
 				// después de un ratito ...
-			game.schedule(3000, { // ... limpio todo de nuevo
-				game.clear()
-					// y arranco el siguiente nivel
-				nivelLlaves.configurate()
+		game.schedule(3000, { // ... limpio todo de nuevo
+		game.clear()
+				// y arranco el siguiente nivel
+		nivelLlaves.configurate()
 			})
 		})
+	}
+	
+	method perder(){
+		game.clear()
+		game.addVisual(new Fondo(position = game.at(0, 0), image = "gameOver.png"))
+		game.schedule(3000, {game.stop()})
 	}
 
 }
