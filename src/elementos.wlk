@@ -127,7 +127,7 @@ object corazon {
 }
 
 class Lingote inherits Llave {
-	override method image() = "oro.png"
+	override method image() = "monedaPirata.png"
 	override method esLingote() = true
 }
 
