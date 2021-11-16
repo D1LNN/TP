@@ -83,7 +83,7 @@ object nivelLlaves {
 	}
 
 	method mostrarPuerta() {
-		if (pirata.cantDeObjetosAgarrados() == 7) game.addVisual(puertaFinal)
+		if (pirata.cantDeObjetosDeOroAgarrados() == 7) game.addVisual(puertaFinal)
 	}
 
 	method comprobarSiGane() {

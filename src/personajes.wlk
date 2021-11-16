@@ -15,7 +15,7 @@ object pirata {
 	var property energia = 30
 	var property dinero = 0
 	var property entro = false
-	var property cantDeObjetosAgarrados = 0
+	var property cantDeObjetosDeOroAgarrados = 0
 
 	method cambiarPosicion(pos) {
 		if (self.puedeMoverseAl(direccion)) {
@@ -42,6 +42,7 @@ object pirata {
 		} else if (objeto.esLingote() or objeto.esMoneda()) {
 			dinero += objeto.dineroQueAporta()
 			salud = (salud - objeto.saludQueSaca()).max(0)
+			cantDeObjetosDeOroAgarrados += 1
 		} else if (objeto.esCorazon()) {
 			salud = (salud + objeto.saludQueAporta()).min(100)
 		} else if (objeto.esBanana()) {
@@ -50,7 +51,6 @@ object pirata {
 			entro = true
 		}
 		objeto.serAgarrada()
-		cantDeObjetosAgarrados += 1
 	}
 
 	method puedeMoverseAl(direc) = self.objetosAl(direc).all({ elem => elem.sePuedePisar() or elem.puedeMoverseAl(direc) })
