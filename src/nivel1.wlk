@@ -13,6 +13,7 @@ object nivelBloques {
 		// Fondos y Depositos
 		game.addVisual(new Fondo(position = game.at(0, 0), image = "arena2.png"))
 		game.addVisual(deposito)
+		self.restartDeposito()
 			// Cofres
 		game.addVisual(new Cofre(position = game.at((0 .. game.width() - 1).anyOne(), (0 .. game.height() - 1).anyOne())))
 		game.addVisual(new Cofre(position = game.at((0 .. game.width() - 1).anyOne(), (0 .. game.height() - 1).anyOne())))
@@ -85,6 +86,10 @@ object nivelBloques {
 	method restartPirata() {
 		pirata.energia(30)
 		pirata.llaves(0)
+	}
+
+	method restartDeposito() {
+		deposito.cofres(0)
 	}
 
 }

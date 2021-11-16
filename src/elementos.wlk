@@ -74,7 +74,7 @@ class Cofre inherits Elemento {
 object deposito {
 
 	var property position = game.at((0 .. game.width() - 3).anyOne(), (0 .. game.height() - 2).anyOne())
-	var cofres = 0
+	var property cofres = 0
 	const property image = "pisoDePiedras2.png"
 
 	method moverA(direc) {
@@ -185,7 +185,7 @@ class Banana inherits Elemento {
 
 	override method sePuedeConsumir() = true
 
-	method energiaQueAporta() = 20
+	method energiaQueAporta() = 25
 
 	override method esBanana() = true
 

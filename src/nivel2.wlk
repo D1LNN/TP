@@ -94,6 +94,7 @@ object nivelLlaves {
 		pirata.energia(30)
 		pirata.salud(100)
 		pirata.dinero(0)
+		pirata.cantDeObjetosDeOroAgarrados(0)
 	}
 
 }
