@@ -64,7 +64,7 @@ object nivelBloques {
 	method perder(){
 		game.clear()
 		game.addVisual(new Fondo(position = game.at(0, 0), image = "gameOver.png"))
-		game.schedule(3000, {game.stop()})
+		game.schedule(5000, {game.stop()})
 	}
 
 }

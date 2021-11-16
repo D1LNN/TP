@@ -24,7 +24,9 @@ class Elemento {
 
 	method esCofre() = false
 	
-	method esLingote() = false
+	method esMoneda() = false
+	
+	method esBanana() = false
 
 }
 
@@ -126,13 +128,16 @@ object corazon {
 
 }
 
-class Lingote inherits Llave {
+class Moneda inherits Llave {
 	override method image() = "monedaPirata.png"
-	override method esLingote() = true
+	override method esMoneda() = true
 }
 
 
-
+class Banana inherits Llave {
+	override method image() = "banana.png"
+	override method esBanana() = true
+}
 
 
 

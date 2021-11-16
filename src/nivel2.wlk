@@ -20,9 +20,13 @@ object nivelLlaves {
 		game.addVisual(new Cofre(position = game.at((0 .. game.width()).anyOne(), (0 .. game.height()).anyOne())))
 		
 		// Lingotes
-		game.addVisual(new Lingote(position = game.at((0 .. game.width()).anyOne(), (0 .. game.height()).anyOne())))
-		game.addVisual(new Lingote(position = game.at((0 .. game.width()).anyOne(), (0 .. game.height()).anyOne())))
-		game.addVisual(new Lingote(position = game.at((0 .. game.width()).anyOne(), (0 .. game.height()).anyOne())))
+		game.addVisual(new Moneda(position = game.at((0 .. game.width()).anyOne(), (0 .. game.height()).anyOne())))
+		game.addVisual(new Moneda(position = game.at((0 .. game.width()).anyOne(), (0 .. game.height()).anyOne())))
+		game.addVisual(new Moneda(position = game.at((0 .. game.width()).anyOne(), (0 .. game.height()).anyOne())))
+		
+		game.addVisual(new Banana(position = game.at((0 .. game.width()).anyOne(), (0 .. game.height()).anyOne())))
+		game.addVisual(new Banana(position = game.at((0 .. game.width()).anyOne(), (0 .. game.height()).anyOne())))
+		game.addVisual(new Banana(position = game.at((0 .. game.width()).anyOne(), (0 .. game.height()).anyOne())))
 		//Hasta aca ↑ 
 		//-----------------------------------------------------------------------------------
 		
@@ -36,6 +40,9 @@ object nivelLlaves {
 		keyboard.down().onPressDo{ pirata.moverA(abajo)}	
 		keyboard.g().onPressDo({ self.ganar()})
 		keyboard.p().onPressDo({ self.perder()})
+		
+		keyboard.space().onPressDo{ pirata.agarrarMonedaAl(pirata.direccion())} // Agarrar Moneda
+		keyboard.enter().onPressDo{ pirata.agarrarBananaAl(pirata.direccion())} // Agarrar Banana
 	    
 	    // colisiones, acá sí hacen falta
 	    //...............
@@ -44,7 +51,7 @@ object nivelLlaves {
 	method perder(){
 		game.clear()
 		game.addVisual(new Fondo(position = game.at(0, 0), image = "gameOver.png"))
-		game.schedule(3000, {game.stop()})
+		game.schedule(5000, {game.stop()})
 		
 	}
 	
