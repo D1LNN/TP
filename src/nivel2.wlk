@@ -1,60 +1,66 @@
 import wollok.game.*
 import fondo.*
 import personajes.*
-import direcciones.*
 import elementos.*
+import nivel1.*
+import direcciones.*
+import indicadores.*
 
 object nivelLlaves {
 
 	method configurate() {
-		// fondo - es importante que sea el primer visual que se agregue
+		// Fondos
 		game.addVisual(new Fondo(position = game.at(0, 0), image = "arena2.png"))
-		// otros visuals, p.ej. bloques o llaves
-		
-		//-------------------------------------------------------------------------------
-		//Solo para probar:
-		//Dese aca ↓
-		// Cofres
-		game.addVisual(new Cofre(position = game.at((0 .. game.width()).anyOne(), (0 .. game.height()).anyOne())))
-		game.addVisual(new Cofre(position = game.at((0 .. game.width()).anyOne(), (0 .. game.height()).anyOne())))
-		game.addVisual(new Cofre(position = game.at((0 .. game.width()).anyOne(), (0 .. game.height()).anyOne())))
-		
-		// Lingotes
+			// -------------------------------------------------------------------------------
+			// Elementos:
+			// Monedas
 		game.addVisual(new Moneda(position = game.at((0 .. game.width()).anyOne(), (0 .. game.height()).anyOne())))
 		game.addVisual(new Moneda(position = game.at((0 .. game.width()).anyOne(), (0 .. game.height()).anyOne())))
 		game.addVisual(new Moneda(position = game.at((0 .. game.width()).anyOne(), (0 .. game.height()).anyOne())))
-		
+			// Bananas
 		game.addVisual(new Banana(position = game.at((0 .. game.width()).anyOne(), (0 .. game.height()).anyOne())))
 		game.addVisual(new Banana(position = game.at((0 .. game.width()).anyOne(), (0 .. game.height()).anyOne())))
 		game.addVisual(new Banana(position = game.at((0 .. game.width()).anyOne(), (0 .. game.height()).anyOne())))
-		//Hasta aca ↑ 
-		//-----------------------------------------------------------------------------------
-		
-		// personaje, es importante que sea el último visual que se agregue
+			// Lingotes
+		game.addVisual(new Lingote(position = game.at((0 .. game.width()).anyOne(), (0 .. game.height()).anyOne())))
+		game.addVisual(new Lingote(position = game.at((0 .. game.width()).anyOne(), (0 .. game.height()).anyOne())))
+		game.addVisual(new Lingote(position = game.at((0 .. game.width()).anyOne(), (0 .. game.height()).anyOne())))
+		game.addVisual(new Lingote(position = game.at((0 .. game.width()).anyOne(), (0 .. game.height()).anyOne())))
+			// Corazones
+		game.addVisual(new Corazon(position = game.at((0 .. game.width()).anyOne(), (0 .. game.height()).anyOne())))
+		game.addVisual(new Corazon(position = game.at((0 .. game.width()).anyOne(), (0 .. game.height()).anyOne())))
+		game.addVisual(new Corazon(position = game.at((0 .. game.width()).anyOne(), (0 .. game.height()).anyOne())))
+		game.addVisual(new Corazon(position = game.at((0 .. game.width()).anyOne(), (0 .. game.height()).anyOne())))
+			// -----------------------------------------------------------------------------------
+			// Textos
+		game.addVisual(energia)
+		game.addVisual(llaves)
+		game.addVisual(salud)
+		game.addVisual(dinero)
+			// Personaje
 		game.addVisual(pirata)
-		
-		// teclado
+		self.restartPirata()
+			// Teclado
 		keyboard.right().onPressDo{ pirata.moverA(derecha)}
 		keyboard.left().onPressDo{ pirata.moverA(izquierda)}
 		keyboard.up().onPressDo{ pirata.moverA(arriba)}
-		keyboard.down().onPressDo{ pirata.moverA(abajo)}	
+		keyboard.down().onPressDo{ pirata.moverA(abajo)}
+		keyboard.space().onPressDo{ pirata.agarrarObjetoAl(pirata.direccion())}
 		keyboard.g().onPressDo({ self.ganar()})
 		keyboard.p().onPressDo({ self.perder()})
-		
-		keyboard.space().onPressDo{ pirata.agarrarMonedaAl(pirata.direccion())} // Agarrar Moneda
-		keyboard.enter().onPressDo{ pirata.agarrarBananaAl(pirata.direccion())} // Agarrar Banana
-	    
-	    // colisiones, acá sí hacen falta
-	    //...............
+		keyboard.r().onPressDo({ self.restart()})
+		keyboard.any().onPressDo{ self.mostrarPuerta()}
+		keyboard.any().onPressDo{ self.comprobarSiGane()}
+		keyboard.o().onPressDo{ game.addVisual(puertaFinal)}
+	// Colisiones
 	}
 
-	method perder(){
+	method perder() {
 		game.clear()
 		game.addVisual(new Fondo(position = game.at(0, 0), image = "gameOver.png"))
-		game.schedule(5000, {game.stop()})
-		
+		game.schedule(3000, { game.stop()})
 	}
-	
+
 	method ganar() {
 		// es muy parecido al terminar() de nivelBloques
 		// el perder() también va a ser parecido
@@ -65,11 +71,29 @@ object nivelLlaves {
 			// después de un ratito ...
 		game.schedule(2500, { game.clear()
 				// cambio de fondo
-		game.addVisual(new Fondo(position = game.at(0, 0), image = "ganasteElJuego.png"))
+			game.addVisual(new Fondo(position = game.at(0, 0), image = "ganasteElJuego.png"))
 				// después de un ratito ...
-		game.schedule(3000, { // fin del juego
-		game.stop()})
+			game.schedule(3000, { // fin del juego
+			game.stop()})
 		})
+	}
+
+	method restart() {
+		game.clear()
+		self.configurate()
+	}
+
+	method mostrarPuerta() {
+		if (pirata.dinero() >= 100) game.addVisual(puertaFinal)
+	}
+
+	method comprobarSiGane() {
+		if (pirata.entro()) self.ganar() else if (not pirata.tieneEnergia() or not pirata.tieneSalud()) self.perder()
+	}
+
+	method restartPirata() {
+		pirata.energia(30)
+		pirata.llaves(0)
 	}
 
 }

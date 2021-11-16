@@ -9,5 +9,10 @@ class Fondo inherits Elemento {
 
 	override method sePuedeMover() = false
 
+	override method sePuedeConsumir() = false
+
+	override method serAgarrada() {
+	}
+
 }
 

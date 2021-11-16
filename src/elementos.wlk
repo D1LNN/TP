@@ -20,13 +20,25 @@ class Elemento {
 
 	method sePuedeMover()
 
+	method sePuedeConsumir()
+
 	method esLlave() = false
 
 	method esCofre() = false
-	
+
+	method esLingote() = false
+
+	method esCorazon() = false
+
 	method esMoneda() = false
-	
+
 	method esBanana() = false
+
+	method esPuerta() = false
+
+	method serAgarrada() {
+		game.removeVisual(self)
+	}
 
 }
 
@@ -38,22 +50,66 @@ class Cofre inherits Elemento {
 
 	override method sePuedeMover() = true
 
+	override method sePuedeConsumir() = false
+
 	override method moverA(direc) {
 		direccion = direc
 		self.cambiarPosicion(direccion.siguiente(self.position()))
 	}
 
+	override method cambiarPosicion(pos) {
+		if (self.puedeMoverseAl(direccion)) self.position(pos)
+		if (self.estaEnDeposito()) deposito.agregarCofre(self)
+	}
+
 	override method esCofre() = true
+
+	method estaEnDeposito() = position.y().between(deposito.position().y(), deposito.position().y() + 1) and position.x().between(deposito.position().x(), deposito.position().x() + 2)
+
+	override method serAgarrada() {
+	}
 
 }
 
-class Deposito inherits Elemento {
+object deposito {
 
+	var property position = game.at((0 .. game.width() - 3).anyOne(), (0 .. game.height() - 2).anyOne())
+	var cofres = 0
 	const property image = "pisoDePiedras2.png"
 
-	override method sePuedePisar() = true
+	method moverA(direc) {
+	}
 
-	override method sePuedeMover() = false
+	method puedeMoverseAl(direc) = game.getObjectsIn(direc.siguiente(position)).all({ elem => elem.sePuedePisar() }) and self.sePuedeMover()
+
+	method esLlave() = false
+
+	method esCofre() = false
+
+	method esCorazon() = false
+
+	method esLingote() = false
+
+	method esMoneda() = false
+
+	method esBanana() = false
+
+	method esPuerta() = false
+
+	method sePuedePisar() = true
+
+	method sePuedeMover() = false
+
+	method sePuedeConsumir() = false
+
+	method estaLleno() = cofres == 3
+
+	method agregarCofre(cofre) {
+		cofres += 1
+	}
+
+	method serAgarrada() {
+	}
 
 }
 
@@ -65,84 +121,108 @@ class Llave inherits Elemento {
 
 	override method sePuedeMover() = false
 
-	method serAgarrada() {
-		game.removeVisual(self)
-	}
+	override method sePuedeConsumir() = false
 
 	override method esLlave() = true
 
 }
 
-object paleta {
+class Corazon inherits Elemento {
 
-	const property verde = "00FF00FF"
-
-}
-
-object salud {
-
-	const property position = game.at(1, 14)
-
-	method text() = "Salud: " + pirata.salud().printString()
-
-	method textColor() = paleta.verde()
-
-	method sePuedePisar() = true
-
-	method moverA(direc) {
-	}
-
-	method cambiarPosicion(pos) {
-	}
-
-	method puedeMoverseAl(direc) = game.getObjectsIn(direc.siguiente(position)).all({ elem => elem.sePuedePisar() }) and self.sePuedeMover()
-
-	method sePuedeMover() = false
-
-	method esLlave() = false
-
-	method esCofre() = false
-
-}
-
-object corazon {
-
-	const property position = game.at(0, 14)
 	var property image = "corazon.png"
 
-	method sePuedePisar() = true
+	override method sePuedePisar() = true
+
+	override method sePuedeMover() = false
+
+	override method sePuedeConsumir() = true
+
+	method saludQueAporta() = 15
+
+	override method esCorazon() = true
+
+}
+
+class Lingote inherits Llave {
+
+	override method image() = "oro.png"
+
+	override method esLingote() = true
+
+	override method esLlave() = false
+
+	method dineroQueAporta() = 20
+
+	method saludQueSaca() = 30
+
+}
+
+class Moneda inherits Lingote {
+
+	override method image() = "monedaPirata.png"
+
+	override method sePuedePisar() = true
+
+	override method sePuedeConsumir() = true
+
+	override method dineroQueAporta() = 10
+
+	override method saludQueSaca() = 15
+
+	override method esMoneda() = true
+
+	override method esLingote() = false
+
+}
+
+class Banana inherits Elemento {
+
+	var property image = "banana.png"
+
+	override method sePuedePisar() = true
+
+	override method sePuedeMover() = false
+
+	override method sePuedeConsumir() = true
+
+	method energiaQueAporta() = 20
+
+	override method esBanana() = true
+
+}
+
+object puertaFinal {
+
+	var property position = game.center()
+	const property image = "puerta.png"
 
 	method moverA(direc) {
 	}
 
-	method cambiarPosicion(pos) {
-	}
-
 	method puedeMoverseAl(direc) = game.getObjectsIn(direc.siguiente(position)).all({ elem => elem.sePuedePisar() }) and self.sePuedeMover()
-
-	method sePuedeMover() = false
 
 	method esLlave() = false
 
 	method esCofre() = false
 
+	method esCorazon() = false
+
+	method esLingote() = false
+
+	method esMoneda() = false
+
+	method esBanana() = false
+
+	method esPuerta() = true
+
+	method sePuedePisar() = false
+
+	method sePuedeMover() = false
+
+	method sePuedeConsumir() = false
+
+	method serAgarrada() {
+	}
+
 }
-
-class Moneda inherits Llave {
-	override method image() = "monedaPirata.png"
-	override method esMoneda() = true
-}
-
-
-class Banana inherits Llave {
-	override method image() = "banana.png"
-	override method esBanana() = true
-}
-
-
-
-
-
-
-
 
