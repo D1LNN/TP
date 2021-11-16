@@ -59,7 +59,7 @@ class Cofre inherits Elemento {
 
 	override method cambiarPosicion(pos) {
 		if (self.puedeMoverseAl(direccion)) self.position(pos)
-		if (self.estaEnDeposito()) deposito.agregarCofre(self)
+		if (self.estaEnDeposito()) deposito.agregarCofre()
 	}
 
 	override method esCofre() = true
@@ -104,7 +104,7 @@ object deposito {
 
 	method estaLleno() = cofres == 3
 
-	method agregarCofre(cofre) {
+	method agregarCofre() {
 		cofres += 1
 	}
 
@@ -193,7 +193,7 @@ class Banana inherits Elemento {
 
 object puertaFinal {
 
-	var property position = game.center()
+	var property position = game.at((0 .. game.width() - 3).anyOne(), (0 .. game.height() - 2).anyOne())
 	const property image = "puerta.png"
 
 	method moverA(direc) {

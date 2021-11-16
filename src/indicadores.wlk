@@ -44,6 +44,8 @@ object salud {
 
 	method esBanana() = false
 
+	method esPuerta() = false
+
 }
 
 object energia {
@@ -79,6 +81,8 @@ object energia {
 	method esMoneda() = false
 
 	method esBanana() = false
+
+	method esPuerta() = false
 
 }
 
@@ -116,6 +120,8 @@ object llaves {
 
 	method esBanana() = false
 
+	method esPuerta() = false
+
 }
 
 object dinero {
@@ -151,6 +157,8 @@ object dinero {
 	method esMoneda() = false
 
 	method esBanana() = false
+
+	method esPuerta() = false
 
 }
 

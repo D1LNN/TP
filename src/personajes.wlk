@@ -15,6 +15,7 @@ object pirata {
 	var property energia = 30
 	var property dinero = 0
 	var property entro = false
+	var property cantDeObjetosAgarrados = 0
 
 	method cambiarPosicion(pos) {
 		if (self.puedeMoverseAl(direccion)) {
@@ -49,6 +50,7 @@ object pirata {
 			entro = true
 		}
 		objeto.serAgarrada()
+		cantDeObjetosAgarrados += 1
 	}
 
 	method puedeMoverseAl(direc) = self.objetosAl(direc).all({ elem => elem.sePuedePisar() or elem.puedeMoverseAl(direc) })

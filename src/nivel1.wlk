@@ -59,6 +59,14 @@ object nivelBloques {
 		})
 	}
 
+	method presentacion() {
+		game.clear()
+		game.addVisual(new Fondo(position = game.at(0, 0), image = "presentacion.png"))
+		keyboard.enter().onPressDo{ game.clear()
+		; self.configurate()
+		}
+	}
+
 	method perder() {
 		game.clear()
 		game.addVisual(new Fondo(position = game.at(0, 0), image = "gameOver.png"))

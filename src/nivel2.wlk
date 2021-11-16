@@ -34,7 +34,6 @@ object nivelLlaves {
 			// -----------------------------------------------------------------------------------
 			// Textos
 		game.addVisual(energia)
-		game.addVisual(llaves)
 		game.addVisual(salud)
 		game.addVisual(dinero)
 			// Personaje
@@ -84,7 +83,7 @@ object nivelLlaves {
 	}
 
 	method mostrarPuerta() {
-		if (pirata.dinero() >= 100) game.addVisual(puertaFinal)
+		if (pirata.cantDeObjetosAgarrados() == 7) game.addVisual(puertaFinal)
 	}
 
 	method comprobarSiGane() {
@@ -93,7 +92,8 @@ object nivelLlaves {
 
 	method restartPirata() {
 		pirata.energia(30)
-		pirata.llaves(0)
+		pirata.salud(100)
+		pirata.dinero(0)
 	}
 
 }
