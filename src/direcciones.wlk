@@ -3,9 +3,7 @@ import wollok.game.*
 object izquierda {
 
 	method siguiente(position) = if (position.x() > 0) position.left(1) else game.at(game.width() - 1, position.y())
-
-	method opuesto() = derecha
-
+	
 	method esIzquierda() = true
 
 }
@@ -13,9 +11,7 @@ object izquierda {
 object derecha {
 
 	method siguiente(position) = if (position.x() < game.height() - 1) position.right(1) else game.at(0, position.y())
-
-	method opuesto() = izquierda
-
+	
 	method esDerecha() = true
 
 }
@@ -23,9 +19,7 @@ object derecha {
 object abajo {
 
 	method siguiente(position) = if (position.y() > 0) position.down(1) else game.at(position.x(), game.height() - 1)
-
-	method opuesto() = arriba
-
+	
 	method esAbajo() = true
 
 }
@@ -33,8 +27,6 @@ object abajo {
 object arriba {
 
 	method siguiente(position) = if (position.y() < game.width() - 1) position.up(1) else game.at(position.x(), 0)
-
-	method opuesto() = abajo
 
 	method esArriba() = true
 
